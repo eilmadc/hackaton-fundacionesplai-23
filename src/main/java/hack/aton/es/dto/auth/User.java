@@ -3,12 +3,21 @@
  */
 package hack.aton.es.dto.auth;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * @author elena-01
@@ -19,124 +28,75 @@ import jakarta.persistence.*;
 public class User {
 
 	// ---------- Attributes ----------
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	 @Id
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	  private Long id;
 
-	@Column(name = "username")
-	private String username;
+	  @NotBlank
+	  @Size(max = 20)
+	  private String username;
 
-	@Column(name = "email")
-	private String email;
+	  @NotBlank
+	  @Size(max = 50)
+	  @Email
+	  private String email;
 
-	@Column(name = "password")
-	private String password;
+	  @NotBlank
+	  @Size(max = 120)
+	  private String password;
 
-	@OneToMany
-	@JoinColumn(name = "id")
-	private List<UserRol> userrol;
+	  @ManyToMany(fetch = FetchType.LAZY)
+	  @JoinTable(  name = "user_roles", 
+	        joinColumns = @JoinColumn(name = "user_id"), 
+	        inverseJoinColumns = @JoinColumn(name = "role_id"))
+	  private Set<Role> roles = new HashSet<>();
 
-	// ---------- Constructors ----------
+	  public User() {
+	  }
 
-	public User() {
+	  public User(String username, String email, String password) {
+	    this.username = username;
+	    this.email = email;
+	    this.password = password;
+	  }
 
-	}
+	  public Long getId() {
+	    return id;
+	  }
 
-	/**
-	 * @param id
-	 * @param username
-	 * @param email
-	 * @param password
-	 * @param userrol
-	 */
-	public User(Long id, String username, String email, String password, List<UserRol> userrol) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.userrol = userrol;
-	}
+	  public void setId(Long id) {
+	    this.id = id;
+	  }
 
-	// ---------- Getters and Setters ----------
+	  public String getUsername() {
+	    return username;
+	  }
 
-	public User(String username, String email, String password) {
-		// TODO Auto-generated constructor stub
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
+	  public void setUsername(String username) {
+	    this.username = username;
+	  }
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
+	  public String getEmail() {
+	    return email;
+	  }
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+	  public void setEmail(String email) {
+	    this.email = email;
+	  }
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
+	  public String getPassword() {
+	    return password;
+	  }
 
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	  public void setPassword(String password) {
+	    this.password = password;
+	  }
 
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
+	  public Set<Role> getRoles() {
+	    return roles;
+	  }
 
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @return the userrol
-	 */
-	public List<UserRol> getUserrol() {
-		return userrol;
-	}
-
-	/**
-	 * @param userrol the userrol to set
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "UserRol")
-	public void setUserrol(List<UserRol> userrol) {
-		this.userrol = userrol;
-	}
-
+	  public void setRoles(Set<Role> roles) {
+	    this.roles = roles;
+	  }
 }

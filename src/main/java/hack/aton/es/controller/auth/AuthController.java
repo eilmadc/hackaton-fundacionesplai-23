@@ -115,7 +115,7 @@ public class AuthController {
 	      });
 	    }
 
-	    user.getUserrol();
+	    user.getRoles();
 	    userRepository.save(user);
 
 	    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
