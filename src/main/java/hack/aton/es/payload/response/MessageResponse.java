@@ -1,4 +1,4 @@
-package hack.aton.es.security.payload.response;
+package hack.aton.es.payload.response;
 
 public class MessageResponse {
   private String message;

@@ -1,5 +1,5 @@
 
-package hack.aton.es.security.payload.request;
+package hack.aton.es.payload.request;
 
 import jakarta.annotation.Nonnull;
 

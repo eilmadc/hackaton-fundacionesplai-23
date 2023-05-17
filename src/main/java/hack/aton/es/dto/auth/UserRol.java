@@ -16,10 +16,7 @@ import jakarta.persistence.Table;
  * @author elena-01
  *
  */
-/**
- * @author elena-01
- *
- */
+
 @Entity
 @Table(name = "user_roles")
 public class UserRol {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hack.aton.es.services;
+package hack.aton.es.service;
 
 /**
  * @author elena-01
